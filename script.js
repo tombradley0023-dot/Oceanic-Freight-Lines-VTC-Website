@@ -1,31 +1,40 @@
+// NAV MENU
 function toggleMenu(){
 document.getElementById("navLinks").classList.toggle("show");
 }
 
-let selectedItem = "";
+// SUPABASE CONNECTION
+const supabaseUrl = "https://ehhulsbpdadaksgcdikc.supabase.co";
+const supabaseKey = "sb_publishable_MEy-QlV5IQ_0DM0VcWD4kQ_2WFtEvdh";
 
-function openShop(item){
-selectedItem = item;
-document.getElementById("shopTitle").textContent = item;
-document.getElementById("shopBox").showModal();
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+// LOAD EVENTS
+async function loadEvents(){
+
+let { data, error } = await supabaseClient
+.from('events')
+.select('*')
+.order('id', { ascending: false });
+
+let box = document.getElementById("eventsBox");
+box.innerHTML = "";
+
+if(!data){
+box.innerHTML = "<p>No events yet.</p>";
+return;
 }
 
-function closeShop(){
-document.getElementById("shopBox").close();
+data.forEach(event => {
+box.innerHTML += `
+<div class="card">
+<h3>${event.title}</h3>
+<p>${event.description}</p>
+${event.image_url ? `<img src="${event.image_url}" style="width:100%;margin-top:10px;border-radius:10px;">` : ""}
+</div>
+`;
+});
+
 }
 
-function submitShop(){
-
-let user = document.getElementById("discordUser").value;
-
-let subject = "Oceanic Shop Request";
-
-let body =
-"Item: " + selectedItem + "%0D%0A" +
-"Discord Username: " + user;
-
-window.location.href =
-"mailto:oceanicfreightlinesvtc@gmail.com?subject=" + subject + "&body=" + body;
-
-closeShop();
-}
+loadEvents();
