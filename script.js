@@ -2,25 +2,6 @@ function toggleMenu(){
 document.getElementById("navLinks").classList.toggle("show");
 }
 
-function sendApplication(){
-
-let name = document.getElementById("name").value;
-let age = document.getElementById("age").value;
-let tmpid = document.getElementById("tmpid").value;
-let reason = document.getElementById("reason").value;
-
-let subject = "Oceanic Freight Lines Application";
-
-let body =
-"Name: " + name + "%0D%0A" +
-"Age: " + age + "%0D%0A" +
-"TruckersMP ID: " + tmpid + "%0D%0A" +
-"Reason: " + reason;
-
-window.location.href =
-"mailto:oceanicfreightlinesvtc@gmail.com?subject=" + subject + "&body=" + body;
-}
-
 let selectedItem = "";
 
 function openShop(item){
